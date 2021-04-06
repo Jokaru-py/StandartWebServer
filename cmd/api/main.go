@@ -17,6 +17,7 @@ func init() {
 }
 
 func main() {
+	//test
 	flag.Parse()
 	log.Println("it working")
 	//server instance init
