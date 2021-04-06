@@ -17,7 +17,6 @@ func init() {
 }
 
 func main() {
-	log.Println("Test")
 	flag.Parse()
 	log.Println("it working")
 	//server instance init
@@ -29,7 +28,5 @@ func main() {
 
 	server := api.New(config)
 
-	if err := server.Start(); err != nil {
-		log.Fatal(err)
-	}
+	log.Fatal(server.Start())
 }
