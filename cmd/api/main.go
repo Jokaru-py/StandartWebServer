@@ -2,19 +2,31 @@ package main
 
 import (
 	"StandartWebServer/internal/app/api"
+	"flag"
+	"github.com/BurntSushi/toml"
 	"log"
 )
 
-var ()
+var (
+	configPath string = "configs/api.toml"
+)
 
 func init() {
-
+	// На этапе запуска получем путь к конфигу
+	flag.StringVar(&configPath, "path", "configs/api.toml", "path to config file in .toml")
 }
 
 func main() {
+	flag.Parse()
 	log.Println("it working")
 	//server instance init
-	server := api.New()
+	config := api.NewConfig()
+	_, err := toml.DecodeFile(configPath, config)
+	if err != nil {
+		log.Println("can not find configs file", err)
+	}
+
+	server := api.New(config)
 
 	if err := server.Start(); err != nil {
 		log.Fatal(err)
