@@ -1,6 +1,7 @@
 package api
 
 import (
+	"StandartWebServer/storage"
 	"github.com/sirupsen/logrus"
 	"net/http"
 )
@@ -21,4 +22,14 @@ func (a *API) configreRouterField() {
 	a.router.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		writer.Write([]byte("Hello!"))
 	})
+}
+
+func (a *API) configreStorageField() error  {
+	storage := storage.New(a.config.Storage)
+	if err := storage.Open(); err != nil{
+		return err
+	}
+
+	a.storage = storage
+	return nil
 }
